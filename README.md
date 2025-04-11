@@ -21,7 +21,7 @@ This project automates the auditing of Ubuntu 24.04 LTS systems using a collecti
 ## ✅ Usage
 
 ```bash
-sudo ./run_audit.sh
+sudo ./Ubuntu.sh
 ```
 ## 📦 Output
 Individual audit results: result/AUDIT_script_name.txt
