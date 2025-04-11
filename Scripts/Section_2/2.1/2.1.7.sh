@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+{
+    # Function to check the installation status of slapd
+    check_slapd_installed() {
+        dpkg-query -s slapd &>/dev/null && echo "slapd is installed"
+    }
+
+    # Function to check if the slapd.service is enabled or active
+    check_slapd_service_status() {
+        enabled=$(systemctl is-enabled slapd.service 2>/dev/null | grep 'enabled')
+        active=$(systemctl is-active slapd.service 2>/dev/null | grep '^active')
+
+        if [[ -n "$enabled" ]]; then
+            l_output2+=( "- slapd.service is enabled")
+        else
+            l_output+=( "- slapd.service is not enabled")
+        fi
+
+        if [[ -n "$active" ]]; then
+            l_output2+=( "- slapd.service is active")
+        else
+            l_output+=( "- slapd.service is not activate")
+        fi
+    }
+
+    # Arrays to store correct and incorrect results
+    l_output=()
+    l_output2=()
+
+    # Check if slapd is installed
+    result=$(check_slapd_installed)
+
+    # If slapd is installed, check the service status
+    if [[ "$result" == "slapd is installed" ]]; then
+        check_slapd_service_status
+    fi
+
+    # Check if slapd is installed
+    if [[ "$result" == "slapd is installed" ]]; then
+        l_output2+=("- $result")
+    else
+       l_output+=("- slapd is not installed")
+    fi
+
+ # Report results in plain text format
+    if [ ${#l_output2[@]} -le 0 ]; then
+        echo "====== Audit Report ======"
+        echo "Audit Result: PASS"
+        echo "--------------------------"
+        echo "Correct Settings:"
+        printf '%s\n' "${l_output[@]}"
+    else
+        echo "====== Audit Report ======"
+        echo "Audit Result: FAIL"
+        echo "--------------------------"
+        echo "Correct Settings:"
+        printf '%s\n' "${l_output[@]}"
+        echo "--------------------------"
+        echo "Reason(s) for Failure:"
+        printf '%s\n' "${l_output2[@]}"
+    fi
+}
