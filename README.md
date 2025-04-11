@@ -23,25 +23,25 @@ This project automates the auditing of Ubuntu 24.04 LTS systems using a collecti
 ```bash
 sudo ./run_audit.sh
 ```
-📦 Output
+## 📦 Output
 Individual audit results: result/AUDIT_script_name.txt
 
 System info summary: result/System_Info.txt
 
 All outputs zipped: audit_reports.zip
 
-🔎 Output Result Types
+## 🔎 Output Result Types
 Each script returns one of the following result types:
 
 Result	Description
-PASS	The system meets the CIS benchmark requirement.
-FAIL	The system does not meet the CIS benchmark requirement.
-MANUAL	The check must be verified manually (e.g., requires visual review).
-SKIP	The check is not applicable to this system or intentionally ignored.
+- PASS	The system meets the CIS benchmark requirement.
+- FAIL	The system does not meet the CIS benchmark requirement.
+- MANUAL	The check must be verified manually (e.g., requires visual review).
+- SKIP	The check is not applicable to this system or intentionally ignored.
 
-🛠 Customize
+## 🛠 Customize
 Add or edit scripts inside the script/ directory to expand coverage or tailor checks for your environment.
 
-🔐 Security Note
+## 🔐 Security Note
 This tool performs read-only audits and does not apply any changes to the system.
 
